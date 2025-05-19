@@ -22,6 +22,12 @@ async def get_ip_addresses(request: Request):
     }
 
 
+@app.get("/ip")
+def get_ip():
+    import requests
+    return {"ip": requests.get("https://api.ipify.org").text}
+
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()

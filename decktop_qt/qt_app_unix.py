@@ -1,4 +1,5 @@
 import os
+import pprint
 from pathlib import Path
 import traceback
 from PyQt6.QtWidgets import (
@@ -53,7 +54,6 @@ class MainWindow(QWidget):
         LOCALAPPDATA = Path(os.getcwd())
         file_path = Path(LOCALAPPDATA / "client1.ovpn")
         print(file_path)
-        os.environ["PATH"] += r";C:\Program Files\OpenVPN\bin"
         def task():
             vpn = None
             try:
@@ -61,15 +61,13 @@ class MainWindow(QWidget):
                     self.label.setText("Подключение к VPN...")
                     vpn = OpenVPNClient(str(file_path))
                     vpn.connect()
-                    time.sleep(5)  # немного подождать, чтобы VPN поднялся
 
+                    time.sleep(3)  # немного подождать, чтобы VPN поднялся
                     self.label.setText("VPN подключен. Подключение к WebSocket...")
-
-                    ws_client = WebSocketClient("ws://10.8.0.1:8000/ws")
                 else:
                     self.label.setText("Подключение к WebSocket...")
-                    ws_client = WebSocketClient("ws://localhost:8000/ws")
 
+                ws_client = WebSocketClient("ws://127.0.0.1:8000/ws")
                 ws = ws_client.connect()
                 data = ws_client.receive_json()
 
