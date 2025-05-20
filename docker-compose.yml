@@ -10,8 +10,8 @@ services:
     networks:
       - backend
     depends_on:
-      - openvpn  # додаємо залежність від openvpn
-    command: sh -c "uvicorn src.fast_app:app --host 0.0.0.0 --port 8000"
+      - openvpn
+    command: sh -c "uvicorn src.main:app --host 0.0.0.0 --port 8000"
 
   openvpn:
     image: kylemanna/openvpn
@@ -19,13 +19,15 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - "1194:1194/udp"
+      - "1194:1194/tcp"
     volumes:
       - openvpn_data:/etc/openvpn
+#      - ./init-openvpn.sh:/init-openvpn.sh
+#    env_file:
+#      - .env
+#    entrypoint: ["/bin/sh", "-c", "/init-openvpn.sh"]
     networks:
       - backend
-    environment:
-      - DEBUG=1
 
 networks:
   backend:
