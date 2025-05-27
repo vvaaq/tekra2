@@ -85,7 +85,10 @@ class MainWindow(QWidget):
         self.label = QLabel("Нажмите 'Connect' для подключения")
         self.checkbox = QCheckBox("Использовать VPN")
         self.button = QPushButton("Connect")
-
+        self.ip_before = QLabel("IP до VPN: неизвестен")
+        self.ip_after = QLabel("IP после VPN: неизвестен")
+        self.layout.addWidget(self.ip_before)
+        self.layout.addWidget(self.ip_after)
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.checkbox)
         self.layout.addWidget(self.button)
@@ -95,6 +98,12 @@ class MainWindow(QWidget):
 
         self.vpn = None
 
+    def get_public_ip(self):
+        import requests
+        try:
+            return requests.get("https://api.ipify.org").text
+        except:
+            return "Ошибка запроса IP"
     def connect_to_server(self):
         LOCALAPPDATA = Path(os.getcwd())
         file_path = LOCALAPPDATA / "client1.ovpn"
@@ -102,18 +111,22 @@ class MainWindow(QWidget):
 
         def task():
             try:
+                ip_before = self.get_public_ip()
+                self.ip_before.setText(f"IP до VPN: {ip_before}")
                 if self.checkbox.isChecked():
                     self.label.setText("Подключение к VPN...")
                     self.vpn = OpenVPNClient(file_path)
                     self.vpn.connect()
 
-                    time.sleep(1)  # Ждем поднятия VPN
+                    time.sleep(5)  # Дать VPN подняться
+                    ip_after = self.get_public_ip()
+                    self.ip_after.setText(f"IP после VPN: {ip_after}")
                     ws_client = WebSocketClient("ws://127.0.0.1:8000/ws")
                     self.label.setText("VPN подключен. Подключение к WebSocket...")
                 else:
                     ws_client = WebSocketClient("ws://127.0.0.1:8000/ws")
                     self.label.setText("Подключение к WebSocket без VPN...")
-
+                    self.ip_after.setText(f"VPN не использовался")
                 ws_client.connect()
                 data = ws_client.receive_json()
 
