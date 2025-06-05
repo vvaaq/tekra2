@@ -1,1 +1,0 @@
-python-openvpn-client @ git+https://github.com/KTH-SSAS/python-openvpn-client@3e2c1d9de9dfe3148b183738c1a88c4a3574ffdf
