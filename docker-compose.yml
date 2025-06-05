@@ -22,10 +22,6 @@ services:
       - "1194:1194/tcp"
     volumes:
       - openvpn_data:/etc/openvpn
-#      - ./init-openvpn.sh:/init-openvpn.sh
-#    env_file:
-#      - .env
-#    entrypoint: ["/bin/sh", "-c", "/init-openvpn.sh"]
     networks:
       - backend
 
