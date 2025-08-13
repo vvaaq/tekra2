@@ -16,10 +16,13 @@ services:
   openvpn:
     image: kylemanna/openvpn
     container_name: vpn_server
+    sysctls:
+      - net.ipv6.conf.default.forwarding=1
+      - net.ipv6.conf.all.forwarding=1
     cap_add:
       - NET_ADMIN
     ports:
-      - "1194:1194/tcp"
+      - "1194:1194/udp"
     volumes:
       - openvpn_data:/etc/openvpn
     networks:
@@ -27,7 +30,7 @@ services:
 
 networks:
   backend:
-    driver: bridge
+    driver: host 
 
 volumes:
   openvpn_data:
