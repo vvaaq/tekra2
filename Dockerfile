@@ -13,7 +13,11 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 
 # Устанавливаем зависимости
-RUN pip install --no-cache-dir -r requirements.txt
+#RUN pip install --no-cache-dir -r requirements.txt
+ENV PIP_DEFAULT_TIMEOUT=180
+RUN python -m pip install --upgrade pip && \
+    pip install --no-cache-dir --prefer-binary --retries 10 -r requirements.txt
+
 
 # Копируем код приложения
 COPY . .
