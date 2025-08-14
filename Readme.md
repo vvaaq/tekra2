@@ -110,7 +110,7 @@ mkdir -p /root/openvpn-data
 chmod 700 /root/openvpn-data
 
 cd /root
-git clone https://github.com/VladSkopenko/tekra_vpn.git
+git clone https://github.com/vvaaq/tekra2.git
 cd tekra_vpn
 ```
 
