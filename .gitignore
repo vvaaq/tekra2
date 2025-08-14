@@ -191,3 +191,36 @@ config.json
 [Bb]uilds/
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
+
+# === VPN / OpenVPN secrets ===
+*.ovpn
+*.key
+*.csr
+*.crt
+*.pem
+*.der
+*.p12
+*.pfx
+crl.pem
+
+# Если кто-то вдруг положит PKI в репо — не коммитим
+pki/
+pki/**
+
+# Клиентские конфигурации по именам (на всякий)
+ccd/
+ccd/**
+
+# === Env / секреты ===
+.env
+.env.*        # кроме .env.example
+!.env.example # образец можно хранить в репо
+
+# === Docker ===
+**/*.log
+docker-compose.override.yml
+*.pid
+
+# иногда люди случайно копируют openvpn-data в репо — перестраховка
+openvpn-data/
+openvpn-as-data/
