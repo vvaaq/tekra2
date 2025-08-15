@@ -116,27 +116,6 @@ cd tekra_vpn
 
 ---
 
-## 4️⃣ Обновление зависимостей 📦
-
-### requirements.txt
-❌ Удалить:
-```
-PyQt6==6.9.0
-```
-✅ Добавить:
-```
-uvicorn==0.27.0.post1
-```
-(и оставить все остальные зависимости из инструкции)
-
-### Dockerfile
-```dockerfile
-ENV PIP_DEFAULT_TIMEOUT=180
-RUN python -m pip install --upgrade pip && \
-    pip install --no-cache-dir --prefer-binary --retries 10 -r requirements.txt
-```
-
----
 
 ## 5️⃣ Конфигурация docker-compose.yml ⚙️
 
