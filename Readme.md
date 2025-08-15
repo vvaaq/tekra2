@@ -117,7 +117,7 @@ cd tekra_vpn
 ---
 
 
-## 5️⃣ Конфигурация docker-compose.yml ⚙️
+## 4️⃣ Конфигурация docker-compose.yml ⚙️
 
 ### OpenVPN сервис 🔐
 - NET_ADMIN  
@@ -131,7 +131,7 @@ cd tekra_vpn
 
 ---
 
-## 6️⃣ Генерация конфигов 🛠
+## 5️⃣ Генерация конфигов 🛠
 
 ```bash
 export OVPN_URL="udp://100.100.100.100"
@@ -152,7 +152,7 @@ nl -ba /root/openvpn-data/openvpn.conf | sed -n '20,60p'
 
 ---
 
-## 7️⃣ Сборка и запуск 🚀
+## 6️⃣ Сборка и запуск 🚀
 ```bash
 docker compose build --no-cache
 docker compose up -d
@@ -162,7 +162,7 @@ ss -lun | grep 1194
 
 ---
 
-## 8️⃣ Создание клиента 👤
+## 7️⃣ Создание клиента 👤
 
 ```bash
 docker run --rm -it -v /root/openvpn-data:/etc/openvpn kylemanna/openvpn \
